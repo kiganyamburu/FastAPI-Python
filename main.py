@@ -53,7 +53,7 @@ if__name__== "__main__":
 
 
 @app.delete("/tasks/ {task_id}", response_model=Task)
-def delete_task(task_id):
+def delete_task(task_id: UUID):
     for idx, task in enumerate(tasks):
         if task.id == task_id:
             return tasks.pop(idx)
