@@ -1,5 +1,4 @@
 # creating Python API with FastAPi, HTTPException
-
 from fastapi import FastAPI
 
 from pydantic import BaseModel
@@ -51,3 +50,12 @@ if__name__== "__main__":
     import uvicorn
     
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
+
+@app.delete("/tasks/ {task_id}", response_model=Task)
+def delete_task(task_id):
+    for idx, task in enumerate(tasks):
+        if task.id == task_id:
+            return tasks.pop(idx)
+        raise HTTPException(status_code=404, detail="Task not found")
+            
