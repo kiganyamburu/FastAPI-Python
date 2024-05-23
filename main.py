@@ -1,4 +1,4 @@
-# creating Python API with FastAPi
+# creating Python API with FastAPi, HTTPException
 
 from fastapi import FastAPI
 
@@ -27,7 +27,26 @@ def create_task(task: Task):
 def read_tasks():
     return { "hello": "world!"}
 
+#  Path paremeter
 
+@app.get("/tasks/{task_id}", response_model=Task)
+def read_tasks(task_id: UUID):
+    from task in tasks:
+        for task in tasks:
+            if task.id == task_id:
+                return task
+            raise HTTPException(status_code=404, detail="Task no found")
+        
+@app.put("/tasks/{task_id}", response_model=Task)
+def update_task(task_id:UUID, task_id:Task):
+    for idx, task in enumerate(tasks):
+        if task.id == task_id:
+            updated_task = task.copy (update=task_update.cict(exclude_unset=True))
+            task[idx] = updated_task
+            return updated_task
+            
+    raise HTTPException(status_code=404, detail="Task not found")
+            
 if__name__== "__main__":
     import uvicorn
     
